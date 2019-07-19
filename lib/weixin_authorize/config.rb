@@ -13,6 +13,16 @@ module WeixinAuthorize
       @redis ||= config.redis
     end
 
+    def token_store_class
+      return nil if config.nil?
+      @token_store_class ||= config.token_store_class
+    end
+
+    def jsticket_store_class
+      return nil if config.nil?
+      @jsticket_store_class ||= config.jsticket_store_class
+    end
+
     def key_expired
       config.key_expired rescue 100
     end
@@ -30,6 +40,6 @@ module WeixinAuthorize
   end
 
   class Config
-    attr_accessor :redis, :rest_client_options, :key_expired
+    attr_accessor :redis, :rest_client_options, :key_expired, :token_store_class, :jsticket_store_class
   end
 end

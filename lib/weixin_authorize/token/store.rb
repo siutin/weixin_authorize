@@ -10,7 +10,9 @@ module WeixinAuthorize
       end
 
       def self.init_with(client)
-        if WeixinAuthorize.weixin_redis.nil?
+        if WeixinAuthorize.token_store_class.present?
+          WeixinAuthorize.token_store_class.new(client)
+        elsif WeixinAuthorize.weixin_redis.nil?
           ObjectStore.new(client)
         else
           RedisStore.new(client)
